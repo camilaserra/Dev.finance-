@@ -60,7 +60,13 @@
                             <th></th>
                         </tr>
                     </thead>
+
+
+
                     <tbody>
+                        
+
+
                         
                     </tbody>
                 </table>
@@ -71,7 +77,7 @@
             <div class="modal">
                 <div class="form">
                     <h2>Nova Transação</h2>
-                    <form action="">
+                    <form action="" onsubmit="Form.submit(event)">
                         <div class="input-group">
                             <label class="sr-only" for="description">Descrição</label>
                             <input type="text" id="description" name="description" value="" placeholder="Descrição">
@@ -85,7 +91,7 @@
 
                             <div class="input-group">
                                 <label class="sr-only" for="date">Data</label>
-                                <input type="date" id="data" name="data" placeholder="date">
+                                <input type="date" id="date" name="date" placeholder="date">
                             </div>
 
                             <div class="input-group actions">
