@@ -140,6 +140,20 @@ const DOM = {
 }
 
 const Utils = {
+    formatAmount (value) {
+        value = Number(value) *100
+        
+        return value
+    },
+
+    formatDate (date) {
+        const splittedDate = date.split("-")
+
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+
+
+    },
+
     formatCurrency(value) {
        const signal = Number(value) < 0 ? "-" : ""
        
@@ -159,18 +173,67 @@ const Utils = {
 }
 
 const Form = {
-   
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    getValues() {
+        return{
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    },
+ 
+    validateFields() {
+        const { description, amount, date } = Form.getValues()
+        
+        if( description.trim() === ""|| 
+            amount.trim() === "" || 
+            date.trim() === "") {
+            throw new Error ("Por favor, preencha todos os campos!")
+        }
+   },
+
+    formatValues () {
+        let { description, amount, date} = Form.getValues()
+
+        amount = Utils.formatAmount(amount)
+
+        date = Utils. formatDate (date)
+
+        return { 
+            description,
+            amount,
+            date
+        }
+   },
+
+    clearFields() {
+        Form.description.value = ""
+        Form.amount.value = ""
+        Form.date.value = ""
+   },
 
     submit(event) {
         event.preventDefault()
-        //verificar se todas as informação foram preenchidas
-        
-        //formatar os dados para salvar
-        
-        //salvar
-        //apagar os dados do formulario
-        //modal feche
-        //atualizar a aplicação
+
+        try {
+            Form.validateFields()
+            //formatar os dados para salvar
+            const transaction = Form.formatValues()
+            //salvar
+            Transaction.add(transaction)
+            //apagar os dados do formulario
+            Form.clearFields()
+            //modal feche
+            Modal.close()
+            //atualizar a aplicação
+            //App.reload() (JA EXISTE!)
+
+        } catch (error) {
+            alert(error.message)
+        }
     }
 }
 
